@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import banner from "@/public/assets/banner.jpg";
 import { firebaseReady } from "@/lib/firebase";
 import { watchCategories, watchProducts } from "@/lib/data";
 import { SORTS, isListed, toDeal, visible, waNum } from "@/lib/products";
+import { useAuth } from "./AuthProvider";
 import { DealCard, FeaturedDeal } from "./Deal";
 import Header from "./Header";
 import OrderModal from "./OrderModal";
@@ -33,6 +35,8 @@ function Grid({ products, error, list, onOrder }) {
 }
 
 export default function Store() {
+  const router = useRouter();
+  const { user, loading } = useAuth();
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(firebaseReady ? "" : "New deals are on the way. Check back soon.");
@@ -53,6 +57,11 @@ export default function Store() {
     };
   }, []);
 
+  // The store is for signed-in customers only; everyone else starts at the login page.
+  useEffect(() => {
+    if (!loading && !user) router.replace("/login");
+  }, [loading, user, router]);
+
   const P = products || [];
   // Category order comes from the admin list; categories with no products are left out.
   const used = new Set(P.map((d) => d.cat));
@@ -60,6 +69,8 @@ export default function Store() {
   const featured = P.find((d) => d.featured);
   const list = products ? visible(products, { cat, q, sort }) : [];
   const wa = waNum();
+
+  if (loading || !user) return <p className="empty">Loading…</p>;
 
   return (
     <>
