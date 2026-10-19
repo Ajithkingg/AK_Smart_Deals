@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AK Smart Deals – Trending Products, Best Deals</title>
+<meta name="description" content="AK Smart Deals: handpicked deals on fashion, gadgets, home, beauty and kitchen from Amazon, Flipkart and our own store. Smart shopping, better deals.">
+<meta name="theme-color" content="#111111">
+<meta property="og:title" content="AK Smart Deals">
+<meta property="og:description" content="Trending products, best deals. Smart shopping, better deals.">
+<meta property="og:image" content="assets/banner.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/logo-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#fbf9f4; --surface:#ffffff; --ink:#151412; --muted:#625d53; --line:#e8e2d4;
+  --accent:#e0a21b; --accent-ink:#231800; --save:#0f7a4a; --save-bg:#e2f4ea; --chip:#f3eee2;
+  --danger:#b3261e; --bar:#111111; --scrim:rgba(0,0,0,.45); --wa:#1f8a4c;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#12110f; --surface:#1d1b17; --ink:#f4f1ea; --muted:#b0a993; --line:#322e26;
+  --accent:#f0b429; --accent-ink:#231800; --save:#5fd39a; --save-bg:#173a2b; --chip:#28251f;
+  --danger:#ff8a80; --bar:#000000; --scrim:rgba(0,0,0,.6); color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+img{max-width:100%}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button{font:inherit;cursor:pointer}
+select,input{font:inherit;color:var(--ink)}
+
+header{position:sticky;top:0;z-index:5;background:var(--bar);color:#fff;padding-top:env(safe-area-inset-top,0px)}
+.bar{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none}
+.logo img{width:42px;height:42px;border-radius:50%;background:#fff}
+.logo em{font-style:normal;color:var(--accent)}
+.search{flex:1;min-width:180px}
+.search input{width:100%;border:0;border-radius:8px;padding:10px 14px;background:#fff;color:#151412}
+
+.hero{padding-block:20px 8px}
+.banner{display:block;width:100%;height:auto;aspect-ratio:1600/589;border-radius:14px;border:1px solid var(--line);background:#fff}
+.lede{margin:14px 0 0;color:var(--muted);max-width:70ch}
+.feature{margin-top:22px;display:grid;grid-template-columns:200px 1fr auto;gap:22px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.feature .thumb{height:160px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.feature h2{font-family:var(--display);font-size:24px;margin:4px 0 6px;line-height:1.15;text-wrap:balance}
+.feature .cta{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+@media (max-width:760px){.feature{grid-template-columns:1fr}.feature .cta{align-items:flex-start}}
+
+.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:26px 14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:7px 14px;font-weight:600;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.controls select{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;padding-bottom:36px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;position:relative;min-width:0}
+.thumb{height:160px;border-radius:9px;display:grid;place-items:center;background:var(--chip);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:contain;background:#fff}
+.thumb svg{width:56px;height:56px;stroke:var(--muted);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.off{position:absolute;top:22px;left:22px;background:var(--accent);color:var(--accent-ink);font:700 13px var(--mono);padding:3px 8px 3px 12px;border-radius:4px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,6px 50%)}
+.own-tag{position:absolute;top:22px;right:22px;background:var(--bar);color:var(--accent);font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.06em}
+.store{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.card h3{font-size:15px;font-weight:600;margin:0;line-height:1.35;overflow-wrap:anywhere}
+.desc{font-size:13px;color:var(--muted);margin:0;overflow-wrap:anywhere}
+.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.now{font-family:var(--display);font-weight:800;font-size:22px}
+.mrp{color:var(--muted);text-decoration:line-through;font-size:13px}
+.save{background:var(--save-bg);color:var(--save);font-size:12px;font-weight:700;padding:2px 7px;border-radius:4px}
+.rating{font-size:13px;color:var(--muted)}
+.rating span{color:var(--ink);font-weight:600}
+.buy{margin-top:auto;display:block;width:100%;text-align:center;text-decoration:none;background:var(--ink);color:var(--bg);font-weight:700;padding:11px;border-radius:8px;border:0}
+.buy:hover{background:var(--accent);color:var(--accent-ink)}
+.buy.order{background:var(--accent);color:var(--accent-ink)}
+.buy.order:hover{background:var(--ink);color:var(--bg)}
+.buy.soldout{background:var(--chip);color:var(--muted);cursor:default}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px 0}
+.skel{background:var(--surface);border:1px solid var(--line);border-radius:12px;height:340px;opacity:.6}
+
+footer{border-top:1px solid var(--line);padding-block:24px 36px;color:var(--muted);font-size:13px;padding-bottom:max(36px,env(safe-area-inset-bottom,0px))}
+footer p{max-width:75ch;margin:0 0 8px}
+
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:20}
+.modal{position:fixed;z-index:21;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,calc(100% - 32px));max-height:calc(100% - 32px);overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.modal h2{font-family:var(--display);font-size:20px;margin:0}
+.osum{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+.osum .mini{width:56px;height:56px;border-radius:8px;background:var(--chip);overflow:hidden;flex:none;display:grid;place-items:center}
+.osum .mini img{width:100%;height:100%;object-fit:contain;background:#fff}
+.osum .mini svg{width:26px;height:26px;stroke:var(--muted);fill:none;stroke-width:1.6}
+.osum b{display:block;font-size:14px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .full{grid-column:1/-1}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;min-width:0}
+.form input,.form select{border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:var(--surface);font-weight:400;width:100%;min-width:0}
+.hint{font-weight:400;color:var(--muted);font-size:12px}
+.total{font-family:var(--display);font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.wa{display:block;text-align:center;text-decoration:none;background:var(--wa);color:#fff;font-weight:700;padding:12px;border-radius:8px}
+.wa[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.note{font-size:12px;color:var(--muted);margin:0}
+.err{color:var(--danger);font-size:13px;margin:0}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 14px;font-weight:600}
+@media (max-width:480px){.form{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.buy,.chip{transition:background .15s,color .15s}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="config.js"></script>
+<script>
+(function(){
+const CFG = Object.assign({whatsapp:"", sheetId:"", sheetTab:"Products"}, window.AK_CONFIG||{});
+const S = { products:null, error:"", cat:"All", q:"", sort:"off", order:null };
+const app = document.getElementById("app");
+
+const ICON = '<svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>';
+const inr = n => "₹" + Number(n||0).toLocaleString("en-IN");
+const pct = d => d.mrp > d.price ? Math.round((1 - d.price/d.mrp)*100) : 0;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl = u => /^https:\/\//i.test(u||"") ? u : "#";
+const isOwn = d => d.type === "own";
+const waNum = () => String(CFG.whatsapp||"").replace(/\D/g,"");
+
+/* Google Drive share links -> direct image links */
+function imgUrl(u){
+  u = String(u||"").trim(); if(!u) return "";
+  const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
+  if(m) return "https://lh3.googleusercontent.com/d/" + m[1];
+  if(/^https:\/\//i.test(u)) return u;
+  if(/^[\w\-./]+\.(jpe?g|png|webp|gif)$/i.test(u)) return u; // file uploaded to this website, e.g. images/shoe.jpg
+  return "";
+}
+const thumb = d => d.img ? `<img src="${esc(d.img)}" alt="" loading="lazy" onerror="this.remove()">` : ICON;
+
+/* ---------- Load products ---------- */
+function parseCSV(text){
+  const rows=[]; let row=[], f="", q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){f+='"';i++;} else q=false; } else f+=c; }
+    else if(c==='"') q=true;
+    else if(c===','){ row.push(f); f=""; }
+    else if(c==='\n'||c==='\r'){ if(c==='\r'&&text[i+1]==='\n') i++; row.push(f); rows.push(row); row=[]; f=""; }
+    else f+=c;
+  }
+  if(f!==""||row.length){ row.push(f); rows.push(row); }
+  return rows.filter(r=>r.some(x=>String(x).trim()!==""));
+}
+const num = v => { const n = Number(String(v||"").replace(/[₹,\s]/g,"")); return isFinite(n) ? n : 0; };
+function toProducts(rows){
+  if(!rows.length) return [];
+  const head = rows[0].map(h=>h.trim().toLowerCase().replace(/[^a-z]+/g,"_").replace(/^_|_$/g,""));
+  const col = (r,k) => { const i = head.indexOf(k); return i<0 ? "" : String(r[i]||"").trim(); };
+  return rows.slice(1).map((r,i)=>{
+    const type = /own|my/i.test(col(r,"type")) ? "own" : "affiliate";
+    const price = num(col(r,"price")), mrp = num(col(r,"mrp")) || price;
+    return {
+      id: "p"+i, type, name: col(r,"name"), cat: col(r,"category") || "Other",
+      store: type==="own" ? "AK Smart Deals" : (col(r,"store") || "Store"),
+      price, mrp: Math.max(mrp, price),
+      rating: num(col(r,"rating")) || "", reviews: num(col(r,"ratings_count")) || "",
+      link: col(r,"link"), img: imgUrl(col(r,"image")), desc: col(r,"description"),
+      stock: /out|no|0/i.test(col(r,"stock")) ? "out" : "in",
+      featured: /^(yes|y|true|1)$/i.test(col(r,"featured")),
+      hide: /^(yes|y|true|1)$/i.test(col(r,"hide"))
+    };
+  }).filter(p => p.name && p.price > 0 && !p.hide && (p.type==="own" || /^https:\/\//i.test(p.link)));
+}
+async function load(){
+  const src = CFG.sheetId
+    ? `https://docs.google.com/spreadsheets/d/${encodeURIComponent(CFG.sheetId)}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(CFG.sheetTab)}&t=${Date.now()}`
+    : `products.csv?t=${Date.now()}`;
+  try{
+    const res = await fetch(src, {cache:"no-store"});
+    if(!res.ok) throw new Error(res.status);
+    const text = await res.text();
+    if(/^\s*</.test(text)) throw new Error("not csv");
+    S.products = toProducts(parseCSV(text));
+  }catch(e){
+    S.products = [];
+    S.error = CFG.sheetId ? "We couldn't load today's deals. Please refresh the page in a minute." : "";
+  }
+  render();
+}
+
+/* ---------- Store ---------- */
+function priceBlock(d){
+  return `<div class="price"><span class="now">${inr(d.price)}</span>${d.mrp>d.price?`<span class="mrp">${inr(d.mrp)}</span><span class="save">Save ${inr(d.mrp-d.price)}</span>`:""}</div>`;
+}
+function ratingBlock(d){
+  return d.rating ? `<div class="rating"><span>★ ${esc(d.rating)}</span>${d.reviews?` · ${Number(d.reviews).toLocaleString("en-IN")} ratings`:""}</div>` : "";
+}
+function buy(d){
+  if(isOwn(d)) return d.stock==="out" ? `<button class="buy soldout" disabled>Out of stock</button>` : `<button class="buy order" data-order="${esc(d.id)}">Order now</button>`;
+  return `<a class="buy" href="${esc(safeUrl(d.link))}" target="_blank" rel="nofollow sponsored noopener">Buy on ${esc(d.store)}</a>`;
+}
+function visible(){
+  const q = S.q.trim().toLowerCase();
+  const list = S.products.filter(d => (S.cat==="All"||d.cat===S.cat) && (!q || (d.name+" "+d.cat+" "+d.store+" "+d.desc).toLowerCase().includes(q)));
+  if(S.sort==="new") return list.slice().reverse();
+  const by = {off:(a,b)=>pct(b)-pct(a), low:(a,b)=>a.price-b.price, high:(a,b)=>b.price-a.price, rating:(a,b)=>(b.rating||0)-(a.rating||0)}[S.sort];
+  return list.slice().sort(by);
+}
+function gridHTML(){
+  if(S.products===null) return Array(4).fill('<div class="skel" aria-hidden="true"></div>').join("") + '<p class="empty" style="padding:8px 0">Loading deals…</p>';
+  if(S.error) return `<p class="empty">${esc(S.error)}</p>`;
+  const list = visible();
+  if(!list.length) return `<p class="empty">${S.products.length?"No deals match your search. Try another word or category.":"New deals are on the way. Check back soon."}</p>`;
+  return list.map(d=>`
+    <article class="card">
+      <div class="thumb">${thumb(d)}</div>
+      ${pct(d)?`<span class="off">${pct(d)}% OFF</span>`:""}
+      ${isOwn(d)?`<span class="own-tag">AK Store</span>`:""}
+      <div class="store">${isOwn(d)?"Sold by AK Smart Deals":esc(d.store)} · ${esc(d.cat)}</div>
+      <h3>${esc(d.name)}</h3>
+      ${isOwn(d)&&d.desc?`<p class="desc">${esc(d.desc)}</p>`:""}
+      ${priceBlock(d)}${ratingBlock(d)}${buy(d)}
+    </article>`).join("");
+}
+function storeHTML(){
+  const P = S.products||[];
+  const cats = ["All", ...new Set(P.map(d=>d.cat))];
+  const f = P.find(d=>d.featured);
+  return `
+  <header><div class="wrap bar">
+    <a class="logo" href="#top"><img src="assets/logo.jpg" alt=""><span>AK <em>Smart Deals</em></span></a>
+    <div class="search"><input id="q" type="search" aria-label="Search deals" placeholder="Search earbuds, mixer, shoes…" value="${esc(S.q)}"></div>
+  </div></header>
+  <main class="wrap" id="top">
+    <section class="hero">
+      <img class="banner" src="assets/banner.jpg" width="1600" height="589" alt="AK Smart Deals. Trending products, best deals: fashion, gadgets, home, beauty, kitchen and more.">
+      <p class="lede">Handpicked deals from Amazon, Flipkart and our own AK Store. Tap "Buy" to order from the store, or "Order now" to order our products on WhatsApp.</p>
+      ${f?`<div class="feature">
+        <div class="thumb">${thumb(f)}</div>
+        <div style="min-width:0"><div class="eyebrow">Deal of the day${pct(f)?` · ${pct(f)}% off`:""}</div>
+          <h2>${esc(f.name)}</h2>${ratingBlock(f)}</div>
+        <div class="cta">${priceBlock(f)}${buy(f)}</div></div>`:""}
+    </section>
+    <div class="controls">
+      <div class="chips" role="group" aria-label="Categories">${cats.length>1?cats.map(c=>`<button class="chip" data-cat="${esc(c)}" aria-pressed="${c===S.cat}">${esc(c)}</button>`).join(""):""}</div>
+      <select id="sort" aria-label="Sort deals">
+        ${[["off","Biggest discount"],["new","Newest first"],["low","Price: low to high"],["high","Price: high to low"],["rating","Top rated"]].map(([v,t])=>`<option value="${v}" ${S.sort===v?"selected":""}>${t}</option>`).join("")}
+      </select>
+    </div>
+    <section class="grid" aria-live="polite">${gridHTML()}</section>
+  </main>
+  <footer><div class="wrap">
+    <p><strong>Affiliate disclosure:</strong> Some products on this site are sold by other stores. AK Smart Deals earns a commission when you buy through those links, at no extra cost to you. As an Amazon Associate we earn from qualifying purchases. Prices can change; the final price is the one on the store's checkout page.</p>
+    ${waNum()?`<p>Questions or orders: WhatsApp <strong style="user-select:all">+${esc(waNum())}</strong></p>`:""}
+    <p>© ${new Date().getFullYear()} AK Smart Deals. Smart Shopping. Better Deals.</p>
+  </div></footer>
+  ${S.order?orderHTML():""}`;
+}
+
+/* ---------- WhatsApp order ---------- */
+const orderProduct = () => S.products.find(p=>p.id===S.order.id);
+function orderReady(){
+  const o = S.order;
+  return o && o.name.trim() && o.phone.replace(/\D/g,"").length>=10 && o.address.trim() && /^\d{6}$/.test(o.pin.trim()) && waNum().length>=10;
+}
+function waHref(){
+  if(!orderReady()) return "#";
+  const o = S.order, d = orderProduct();
+  const msg = `New order from AK Smart Deals website\n\nProduct: ${d.name}\nPrice: ${inr(d.price)} x ${o.qty} = ${inr(d.price*o.qty)}\n\nName: ${o.name}\nPhone: ${o.phone}\nAddress: ${o.address}\nPincode: ${o.pin}`;
+  return "https://wa.me/" + waNum() + "?text=" + encodeURIComponent(msg);
+}
+const hintText = () => orderReady() ? "WhatsApp opens with your order filled in. Tap send there. We confirm the order and payment details on WhatsApp." : "Fill in all the details to continue.";
+function orderHTML(){
+  const o = S.order, d = orderProduct(); if(!d) return "";
+  return `<div class="scrim" id="oscrim"></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Place your order">
+    <h2>Place your order</h2>
+    <div class="osum"><div class="mini">${thumb(d)}</div><div style="min-width:0;flex:1"><b>${esc(d.name)}</b><span class="rating">${inr(d.price)} each</span></div></div>
+    <div class="form">
+      <label>Quantity<select id="o-qty">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<option ${o.qty===n?"selected":""}>${n}</option>`).join("")}</select></label>
+      <div style="display:flex;flex-direction:column;justify-content:flex-end"><span class="hint">Total</span><span class="total" id="o-total">${inr(d.price*o.qty)}</span></div>
+      <label class="full">Your name<input id="o-name" autocomplete="name" value="${esc(o.name)}"></label>
+      <label class="full">Mobile number<input id="o-phone" type="tel" inputmode="numeric" autocomplete="tel" value="${esc(o.phone)}" placeholder="10-digit number"></label>
+      <label class="full">Delivery address<input id="o-address" autocomplete="street-address" value="${esc(o.address)}" placeholder="House no, street, area, city"></label>
+      <label>Pincode<input id="o-pin" inputmode="numeric" maxlength="6" autocomplete="postal-code" value="${esc(o.pin)}"></label>
+    </div>
+    ${waNum().length>=10 ? `<a class="wa" id="o-send" href="${esc(waHref())}" target="_blank" rel="noopener" aria-disabled="${!orderReady()}">Send order on WhatsApp</a>
+    <p class="note" id="o-hint">${hintText()}</p>`
+    : `<p class="err">Online ordering is not set up yet. Please check back soon.</p>`}
+    <button class="btn" id="o-close">Cancel</button>
+  </div>`;
+}
+function updateOrderUI(){
+  const a = document.getElementById("o-send"), h = document.getElementById("o-hint"), t = document.getElementById("o-total");
+  const d = orderProduct();
+  if(t && d) t.textContent = inr(d.price*S.order.qty);
+  if(a){ a.href = waHref(); a.setAttribute("aria-disabled", String(!orderReady())); }
+  if(h) h.textContent = hintText();
+}
+
+/* ---------- Render + events ---------- */
+function render(){
+  const a = document.activeElement, fid = a && a.id, pos = a && a.selectionStart;
+  app.innerHTML = storeHTML();
+  if(fid){ const el = document.getElementById(fid); if(el){ el.focus(); try{ if(pos!=null) el.setSelectionRange(pos,pos); }catch(e){} } }
+}
+app.addEventListener("input", e=>{
+  if(e.target.id==="q"){ S.q = e.target.value; render(); return; }
+  const k = {"o-name":"name","o-phone":"phone","o-address":"address","o-pin":"pin"}[e.target.id];
+  if(k && S.order){ S.order[k] = e.target.value; updateOrderUI(); }
+});
+app.addEventListener("change", e=>{
+  if(e.target.id==="sort"){ S.sort = e.target.value; render(); }
+  if(e.target.id==="o-qty" && S.order){ S.order.qty = Number(e.target.value)||1; updateOrderUI(); }
+});
+app.addEventListener("click", e=>{
+  const t = e.target.closest("button, .scrim"); if(!t) return;
+  if(t.dataset.cat){ S.cat = t.dataset.cat; render(); return; }
+  if(t.dataset.order){ S.order = {id:t.dataset.order, qty:1, name:"", phone:"", address:"", pin:""}; render(); const f = document.getElementById("o-name"); if(f) f.focus(); return; }
+  if(t.id==="o-close"||t.id==="oscrim"){ S.order = null; render(); }
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && S.order){ S.order = null; render(); } });
+
+render();
+load();
+})();
+</script>
+</body>
+</html>
