@@ -19,7 +19,7 @@ export default function Header({ children }) {
           <span>AK <em>Smart Deals</em></span>
         </Link>
         {children}
-        {auth && !loading && (
+        {!loading && (
           <nav className="account" aria-label="Account">
             {user ? (
               <>
