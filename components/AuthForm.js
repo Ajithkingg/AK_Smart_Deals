@@ -23,9 +23,11 @@ const MESSAGES = {
   "auth/popup-blocked": "Your browser blocked the Google window. Allow pop-ups for this site and try again.",
   "auth/unauthorized-domain": "Google sign-in isn't enabled for this website address yet.",
   "auth/network-request-failed": "No internet connection. Check your connection and try again.",
+  "auth/configuration-not-found": "Login isn't switched on yet. The site owner needs to enable Authentication in Firebase.",
+  "auth/operation-not-allowed": "This sign-in method isn't switched on yet. The site owner needs to enable it in Firebase.",
 };
 const IGNORED = ["auth/popup-closed-by-user", "auth/cancelled-popup-request"];
-const message = (e) => MESSAGES[e?.code] || "Something went wrong. Please try again.";
+const message = (e) => MESSAGES[e?.code] || `Something went wrong (${e?.code || "unknown error"}). Please try again.`;
 
 function GoogleIcon() {
   return (
