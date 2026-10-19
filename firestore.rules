@@ -1,0 +1,38 @@
+rules_version = '2';
+
+// Paste this into Firebase console → Firestore Database → Rules, then click Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    function onlyChanges(keys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+
+    // Anyone can browse products and categories; only admins can change them.
+    match /products/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /categories/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Each user has a profile. New accounts are always "user";
+    // only an admin can change someone's role.
+    match /users/{uid} {
+      allow read: if (signedIn() && request.auth.uid == uid) || isAdmin();
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.role == 'user';
+      allow update: if (signedIn() && request.auth.uid == uid && onlyChanges(['name', 'photo']))
+        || (isAdmin() && onlyChanges(['role']) && request.resource.data.role in ['user', 'admin']);
+      allow delete: if false;
+    }
+  }
+}

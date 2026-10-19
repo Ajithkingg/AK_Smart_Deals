@@ -1,4 +1,5 @@
 import { Bricolage_Grotesque, Figtree, JetBrains_Mono } from "next/font/google";
+import AuthProvider from "@/components/AuthProvider";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({ subsets: ["latin"], weight: ["600", "800"], variable: "--font-display" });
@@ -30,7 +31,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

@@ -2,13 +2,18 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import logo from "@/public/assets/logo.jpg";
 import banner from "@/public/assets/banner.jpg";
-import { SORTS, loadProducts, visible, waNum } from "@/lib/products";
+import { firebaseReady } from "@/lib/firebase";
+import { watchCategories, watchProducts } from "@/lib/data";
+import { SORTS, isListed, toDeal, visible, waNum } from "@/lib/products";
 import { DealCard, FeaturedDeal } from "./Deal";
+import Header from "./Header";
 import OrderModal from "./OrderModal";
 
+const LOAD_ERROR = "We couldn't load today's deals. Please refresh the page in a minute.";
+
 function Grid({ products, error, list, onOrder }) {
+  if (error) return <p className="empty">{error}</p>;
   if (products === null) {
     return (
       <>
@@ -17,7 +22,6 @@ function Grid({ products, error, list, onOrder }) {
       </>
     );
   }
-  if (error) return <p className="empty">{error}</p>;
   if (!list.length) {
     return (
       <p className="empty">
@@ -29,7 +33,9 @@ function Grid({ products, error, list, onOrder }) {
 }
 
 export default function Store() {
-  const [{ products, error }, setData] = useState({ products: null, error: "" });
+  const [products, setProducts] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(firebaseReady ? "" : "New deals are on the way. Check back soon.");
   const [cat, setCat] = useState("All");
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("off");
@@ -37,28 +43,31 @@ export default function Store() {
   const closeOrder = useCallback(() => setOrder(null), []);
 
   useEffect(() => {
-    loadProducts().then(setData);
+    if (!firebaseReady) return;
+    const fail = () => setError(LOAD_ERROR);
+    const stopProducts = watchProducts((rows) => setProducts(rows.map(toDeal).filter(isListed)), fail);
+    const stopCategories = watchCategories(setCategories, () => {});
+    return () => {
+      stopProducts();
+      stopCategories();
+    };
   }, []);
 
   const P = products || [];
-  const cats = ["All", ...new Set(P.map((d) => d.cat))];
+  // Category order comes from the admin list; categories with no products are left out.
+  const used = new Set(P.map((d) => d.cat));
+  const cats = ["All", ...new Set([...categories.map((c) => c.name).filter((n) => used.has(n)), ...used])];
   const featured = P.find((d) => d.featured);
   const list = products ? visible(products, { cat, q, sort }) : [];
   const wa = waNum();
 
   return (
     <>
-      <header>
-        <div className="wrap bar">
-          <a className="logo" href="#top">
-            <Image src={logo} alt="" width={42} height={42} priority />
-            <span>AK <em>Smart Deals</em></span>
-          </a>
-          <div className="search">
-            <input type="search" aria-label="Search deals" placeholder="Search earbuds, mixer, shoes…" value={q} onChange={(e) => setQ(e.target.value)} />
-          </div>
+      <Header>
+        <div className="search">
+          <input type="search" aria-label="Search deals" placeholder="Search earbuds, mixer, shoes…" value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
-      </header>
+      </Header>
 
       <main className="wrap" id="top">
         <section className="hero">
