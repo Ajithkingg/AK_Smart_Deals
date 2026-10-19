@@ -4,19 +4,32 @@ Smart Shopping. Better Deals.
 
 ## Files
 
+Built with [Next.js](https://nextjs.org) (React) and exported as a static site.
+
 | File | What it is |
 |---|---|
-| `index.html` | The website |
-| `config.js` | Your settings: WhatsApp number and Google Sheet ID |
-| `products.csv` | Product list used until a Google Sheet is connected |
-| `assets/` | Logo, banner and site icon |
+| `lib/config.js` | Your settings: WhatsApp number and Google Sheet ID |
+| `components/` | The page parts: store, deal cards, WhatsApp order form |
+| `lib/products.js` | Loads and sorts products from the sheet |
+| `app/` | Page layout, styles and site icon |
+| `public/products.csv` | Product list used when no Google Sheet is set |
+| `public/assets/` | Logo and banner |
+
+## Run on your computer
+
+```
+npm install
+npm run dev
+```
+
+Open http://localhost:3000.
 
 ## Going live with GitHub Pages
 
-1. Upload all the files to this repository: **Add file → Upload files**. Keep the `assets` folder.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, set Source to **Deploy from a branch**, pick branch **main** and folder **/ (root)**, then click **Save**.
-4. After 1–2 minutes the site is live at `https://ajithkingg.github.io/AK_Smart_Deals/`.
+1. Go to **Settings → Pages**.
+2. Under **Build and deployment**, set Source to **GitHub Actions**.
+3. Every push to **main** builds and publishes the site automatically (see the **Actions** tab).
+4. The site is live at `https://ajithkingg.github.io/AK_Smart_Deals/`.
 
 ## Products in a Google Sheet
 
@@ -35,7 +48,7 @@ Smart Shopping. Better Deals.
    - **featured**: `yes` for the Deal of the day
    - **hide**: `yes` to hide a product without deleting it
 4. Click **Share → General access → Anyone with the link → Viewer**.
-5. Copy the sheet ID from its address (the code between `/d/` and `/edit`) and paste it into `config.js` as `sheetId`.
+5. Copy the sheet ID from its address (the code between `/d/` and `/edit`) and paste it into `lib/config.js` as `sheetId`.
 
 Changes in the sheet appear on the website when a visitor opens or refreshes the page.
 
